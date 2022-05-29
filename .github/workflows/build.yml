@@ -4,10 +4,11 @@ on: [ push ]
 
 jobs:
   test:
+    runs-on: windows-latest
     steps:
       - name: Configure build for x86
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: amd64_x86
-          
+
       - run: build # (for x86)
