@@ -1,0 +1,13 @@
+name: C/C++ CI
+
+on: [ push ]
+
+jobs:
+  test:
+    steps:
+      - name: Configure build for x86
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64_x86
+          
+      - run: build # (for x86)
