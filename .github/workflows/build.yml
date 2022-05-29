@@ -1,14 +1,18 @@
-name: C/C++ CI
-
-on: [ push ]
-
+name: Build
+on: [push]
 jobs:
-  test:
+  build:
     runs-on: windows-latest
-    steps:
-      - name: Configure build for x86
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: amd64_x86
 
-      - run: build # (for x86)
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+
+    - name: MSRestore
+      run: msbuild /property:Configuration=debug /p:Platform=x86 /t:Restore .\simple-pe-loader.sln
+    - name: MSBuild
+      run: msbuild /property:Configuration=debug /p:Platform=x86 .\simple-pe-loader.sln
